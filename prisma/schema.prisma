@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  logo           String?
+  letterhead     String?
+  website        String?
+  industry       String?
+  country        String?
+  
+  users          User[]
+  employees      Employee[]
+  templates      Template[]
+  documents      Document[]
+  emails         Email[]
+  auditLogs      AuditLog[]
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  password       String
+  name           String
+  role           String   @default("EMPLOYEE")
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+  
+  auditLogs      AuditLog[]
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  @@index([companyId])
+}
+
+model Employee {
+  id             String   @id @default(cuid())
+  firstName      String
+  lastName       String
+  email          String
+  phone          String?
+  position       String
+  department     String
+  joinDate       DateTime
+  status         String   @default("ACTIVE")
+  profileImage   String?
+  
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+  
+  documents      Document[]
+  emails         Email[]
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  @@index([companyId])
+}
+
+model Template {
+  id             String   @id @default(cuid())
+  name           String
+  type           String
+  content        String
+  
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+  
+  documents      Document[]
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  @@index([companyId])
+}
+
+model Document {
+  id             String   @id @default(cuid())
+  title          String
+  type           String
+  status         String   @default("DRAFT")
+  content        String
+  filePath       String?
+  
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+  
+  employee       Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId     String
+  
+  template       Template? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  templateId     String?
+  
+  emails         Email[]
+  auditLogs      AuditLog[]
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  @@index([companyId])
+  @@index([employeeId])
+}
+
+model Email {
+  id             String   @id @default(cuid())
+  subject        String
+  from           String
+  to             String
+  cc             String?
+  bcc            String?
+  body           String
+  category       String?
+  status         String   @default("RECEIVED")
+  priority       String?
+  
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+  
+  employee       Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  employeeId     String?
+  
+  document       Document? @relation(fields: [documentId], references: [id], onDelete: SetNull)
+  documentId     String?
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  @@index([companyId])
+}
+
+model AuditLog {
+  id             String   @id @default(cuid())
+  action         String
+  entity         String
+  entityId       String
+  changes        String?
+  
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+  
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String
+  
+  document       Document? @relation(fields: [documentId], references: [id], onDelete: SetNull)
+  documentId     String?
+  
+  createdAt      DateTime @default(now())
+  
+  @@index([companyId])
+}
