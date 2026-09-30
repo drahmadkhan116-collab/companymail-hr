@@ -194,7 +194,14 @@
     "pendo-guides@knowledge-work-plugins": true,
     "pendo-orchestrate@knowledge-work-plugins": true,
     "amazon-selling-partner@knowledge-work-plugins": true,
-    "render@knowledge-work-plugins": true
+    "render@knowledge-work-plugins": true,
+    "playwright@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "firecrawl@claude-plugins-official": true,
+    "zyte-web-data@claude-plugins-official": true,
+    "outputai@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "postiz@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "knowledge-work-plugins": {
@@ -207,6 +214,12 @@
       "source": {
         "source": "github",
         "repo": "daymade/claude-code-skills"
+      }
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
       }
     }
   }
