@@ -83,7 +83,15 @@
     "excalidraw-use@daymade-skills": true,
     "meme-creator@daymade-skills": true,
     "data-visualization-discipline@daymade-skills": true,
-    "report-with-html@daymade-skills": true
+    "report-with-html@daymade-skills": true,
+    "tibo-reset-codex@daymade-skills": true,
+    "daymade-claude-code@daymade-skills": true,
+    "daymade-macos@daymade-skills": true,
+    "openclaw@daymade-skills": true,
+    "openclaw-model-switch@daymade-skills": true,
+    "kimi-use@daymade-skills": true,
+    "windows-remote-desktop-connection-doctor@daymade-skills": true,
+    "slides-creator@daymade-skills": true
   },
   "extraKnownMarketplaces": {
     "knowledge-work-plugins": {
