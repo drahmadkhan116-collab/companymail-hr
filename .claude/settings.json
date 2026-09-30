@@ -1,4 +1,7 @@
 {
+  "enabledMcpjsonServers": [
+    "openseo"
+  ],
   "hooks": {
     "SessionStart": [
       {
