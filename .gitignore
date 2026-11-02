@@ -10,3 +10,13 @@ dist
 .vscode
 .idea
 prisma.config.ts
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Next.js / TS generated
+next-env.d.ts
+*.tsbuildinfo
